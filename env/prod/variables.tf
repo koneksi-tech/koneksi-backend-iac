@@ -39,6 +39,11 @@ variable "droplet_size" {
   default = "s-1vcpu-1gb"
 }
 
+variable "droplet_size_list" {
+  type    = list(string)
+  default = []
+}
+
 variable "droplet_image" {
   type    = string
   default = "ubuntu-22-04-x64"

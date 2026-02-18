@@ -10,7 +10,11 @@ resource "digitalocean_droplet" "this" {
   count  = var.droplet_count
   name   = "${var.name_prefix}-${count.index + 1}"
   region = var.region
-  size   = var.size
+  size = (
+    try(length(trimspace(var.droplet_size_list[count.index])) > 0, false)
+    ? var.droplet_size_list[count.index]
+    : var.size
+  )
   image  = var.image
 
   ssh_keys = var.ssh_key_fingerprints

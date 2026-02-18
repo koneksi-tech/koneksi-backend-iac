@@ -2,6 +2,10 @@ variable "name_prefix" { type = string }
 variable "region"      { type = string }
 variable "droplet_count" { type = number }
 variable "size"        { type = string }
+variable "droplet_size_list" {
+  type    = list(string)
+  default = []
+}
 variable "image"       { type = string }
 
 variable "ssh_key_fingerprints" {

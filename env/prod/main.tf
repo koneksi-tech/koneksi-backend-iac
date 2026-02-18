@@ -30,6 +30,7 @@ module "droplets" {
   region                 = var.region
   droplet_count          = var.droplet_count
   size                   = var.droplet_size
+  droplet_size_list      = var.droplet_size_list
   image                  = var.droplet_image
   ssh_key_fingerprints   = var.droplet_ssh_key_fingerprints
   user_data              = var.droplet_user_data
