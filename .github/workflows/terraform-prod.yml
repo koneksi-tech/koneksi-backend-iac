@@ -1,0 +1,43 @@
+name: terraform-prod
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "env/prod/**"
+      - "modules/**"
+      - ".github/workflows/terraform-prod.yml"
+  workflow_dispatch:
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    env:
+      TF_IN_AUTOMATION: "true"
+      DO_TOKEN: ${{ secrets.DO_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: "us-east-1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: Write tfvars
+        run: |
+          cat <<'EOF' > env/prod/terraform.tfvars
+          ${{ secrets.TFVARS_PROD }}
+          EOF
+
+      - name: Init
+        working-directory: env/prod
+        run: terraform init -reconfigure
+
+      - name: Plan
+        working-directory: env/prod
+        run: terraform plan -out=tfplan
+
+      - name: Apply
+        if: github.ref == 'refs/heads/main'
+        working-directory: env/prod
+        run: terraform apply -auto-approve tfplan
