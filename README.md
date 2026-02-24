@@ -112,3 +112,9 @@ flowchart TB
   A1 --- MG
   A2 --- PG
 ```
+
+
+
+======= env update of tfvars =======
+
+gh secret set TFVARS_PROD < "/Users/christianlongos/Desktop/Ar-tech/work-repos/koneksi/terraform/koneksi-prod/env/prod/terraform.tfvars"

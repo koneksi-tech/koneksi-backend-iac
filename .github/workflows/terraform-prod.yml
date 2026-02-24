@@ -24,10 +24,10 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
 
       - name: Write tfvars
+        env:
+          TFVARS_PROD: ${{ secrets.TFVARS_PROD }}
         run: |
-          cat <<'EOF' > env/prod/terraform.tfvars
-          ${{ secrets.TFVARS_PROD }}
-          EOF
+          printf '%s' "$TFVARS_PROD" > env/prod/terraform.tfvars
 
       - name: Init
         working-directory: env/prod
