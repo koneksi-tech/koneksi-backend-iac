@@ -115,6 +115,8 @@ variable "apps" {
     source_dir  = optional(string)
     image       = optional(string)
     auto_deploy = optional(bool, true)
+    instance_size_slug = optional(string)
+    instance_count = optional(number)
     env         = optional(map(string), {})
     env_scope   = optional(string, "RUN_TIME")
     http_port   = optional(number)

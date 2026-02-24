@@ -17,6 +17,7 @@ resource "digitalocean_project_resources" "this" {
   project   = data.digitalocean_project.this.id
   resources = concat(
     module.droplets.droplet_urns,
+    module.droplets.reserved_ip_urns,
     values(module.databases.postgres_urns),
     values(module.databases.mongo_urns),
     module.apps.app_urns

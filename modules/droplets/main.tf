@@ -26,3 +26,10 @@ resource "digitalocean_droplet" "this" {
   vpc_uuid = var.vpc_uuid
   tags     = var.tags
 }
+
+resource "digitalocean_reserved_ip" "this" {
+  count = var.droplet_count
+
+  region     = var.region
+  droplet_id = digitalocean_droplet.this[count.index].id
+}

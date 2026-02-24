@@ -29,8 +29,14 @@ resource "digitalocean_app" "this" {
 
     service {
       name               = "web"
-      instance_count     = var.instance_count
-      instance_size_slug = var.instance_size_slug
+      instance_count = coalesce(
+        try(var.apps[count.index].instance_count, null),
+        var.instance_count
+      )
+      instance_size_slug = coalesce(
+        try(var.apps[count.index].instance_size_slug, null),
+        var.instance_size_slug
+      )
 
       dynamic "github" {
         for_each = var.apps[count.index].source == "github" ? [var.apps[count.index]] : []
